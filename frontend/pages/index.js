@@ -45,11 +45,19 @@ export default function Home({ status, forms }) {
 
   const [fields, setFields] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [selected, setSelected] = useState(null)
+
+  const submit = () => {
+    print();
+    setSubmitted(true);
+  }
 
   const print = () => {
     const doc = new jsPDF();
-    doc.text("Hello world!", 10, 10);
+    let str = "";
+    for (const [key, value] of Object.entries(fields)) {
+      str += key + " : " + value + '\n'
+    }
+    doc.text(str, 10, 10);
     doc.save("a4.pdf");
   };
 
@@ -78,6 +86,7 @@ export default function Home({ status, forms }) {
     }
   }
 
+
   return (
     <div className={styles.container}>
       <Head>
@@ -103,7 +112,7 @@ export default function Home({ status, forms }) {
             </form>
           ))
         }
-
+      {!submitted && <button onClick={submit}>Submit</button>}
       {submitted && <button onClick={print}>Save</button>}
 
       </main>

@@ -23,21 +23,47 @@ const getForms = () => {
           ]
         }
       ]
+    },
+    {
+      fields: [
+        {
+          id: 'hair',
+          name: 'Hair Description',
+          type: 'paragraph',
+          desc: 'In under 100 characters, describe what Sam\'s hair means to you.',
+          rules: [
+            {
+              key: 'max',
+              value: '100'
+            }
+          ]
+        }
+      ]
     }
   ]
 }
 
 const handleResults = async (results: any, formNum: any) => {
   const fields = JSON.parse(results);
-  if(formNum == 1){
-    await prisma.form1.create({
-      data: {
-        handsomeRating: fields.handsomeRating,
-      },
-
-    })
+  try{
+    if(formNum == 1){
+      await prisma.form1.create({
+        data: {
+          handsomeRating: fields.handsomeRating,
+        },
+      })
+    }else{
+      await prisma.form2.create({
+        data: {
+          hairDesc: fields.hairDesc,
+        },
+      })
+    }
+    return true
+  }catch (e){
+    console.log(e)
+    return false
   }
-  return true
 }
 
 export default {

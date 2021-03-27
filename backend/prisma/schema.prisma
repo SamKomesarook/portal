@@ -15,3 +15,9 @@ model Form1 {
   createdAt         DateTime @default(now())
   handsomeRating    Int
 }
+
+model Form2 {
+  id                Int      @default(autoincrement()) @id
+  createdAt         DateTime @default(now())
+  hairDesc          String
+}

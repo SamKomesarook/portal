@@ -79,7 +79,7 @@ export default function Home({ status, forms }) {
       case 'number':
         return (<label>
         {field.name}
-        <input  value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
+        <input style={{marginLeft: '12px'}} value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
         </label>)
       default:
         return 
@@ -112,21 +112,9 @@ export default function Home({ status, forms }) {
             </form>
           ))
         }
-      {!submitted && <button onClick={submit}>Submit</button>}
-      {submitted && <button onClick={print}>Save</button>}
-
+      {!submitted && <button style={{marginTop: '12px'}} onClick={submit}>Submit</button>}
+      {submitted && <button style={{marginTop: '12px'}} onClick={print}>Save</button>}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }

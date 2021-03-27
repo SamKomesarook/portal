@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.13",
+    "antd": "^4.14.1",
     "graphql": "^15.5.0",
     "jspdf": "^2.3.1",
     "next": "10.0.9",

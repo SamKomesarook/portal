@@ -5,21 +5,42 @@ import client from "../apollo-client";
 
 
 export async function getStaticProps() {
-  const { data } = await client.query({
+  const status = await client.query({
     query: gql`
       query Status {
         status
       }
     `,
   });
+
+ 
+  const forms = await client.query({
+    query: gql`
+      query GetForms {
+        getForms {
+          fields {
+            name
+            type
+            desc
+            rules {
+              key
+              value
+            }
+          }
+        }
+      }
+    `,
+  });
+
   return {
     props: {
-      status: data.status,
+      status: status.data.status,
+      forms: forms.data.getForms
     },
  };
 }
 
-export default function Home({ status }) {
+export default function Home({ status, forms }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -29,47 +50,24 @@ export default function Home({ status }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to the console!
         </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
 
         <p className={styles.description}>
           The status of the server is {status}
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        {
+          forms.map((form) => (
+            <div>
+            {form.fields.map((field => (
+              <h3>{field.desc}</h3>
+            )))}
+            </div>
+          ))
+        }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        
       </main>
 
       <footer className={styles.footer}>

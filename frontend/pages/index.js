@@ -1,7 +1,25 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { gql } from "@apollo/client";
+import client from "../apollo-client";
 
-export default function Home() {
+
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: gql`
+      query Status {
+        status
+      }
+    `,
+  });
+  return {
+    props: {
+      status: data.status,
+    },
+ };
+}
+
+export default function Home({ status }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +35,10 @@ export default function Home() {
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
+        </p>
+
+        <p className={styles.description}>
+          The status of the server is {status}
         </p>
 
         <div className={styles.grid}>

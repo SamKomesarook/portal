@@ -97,10 +97,20 @@ export default function Home({ status, forms }) {
         </label>
         <p>{field.desc}</p>
         </>)
+      case 'paragraph':
+        return (
+        <>
+        <label>
+        {field.name}
+        <textarea style={{marginLeft: '12px'}} value={fields[field.id]} min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
+        </label>
+        <p>{field.desc}</p>
+        </>)
       default:
         return 
     }
   }
+
 
 
   return (
@@ -119,17 +129,14 @@ export default function Home({ status, forms }) {
           The status of the server is {status}
         </p>
 
-        <button style={{marginBottom: '12px'}} onClick={submit}>Toggle</button>
-
-        {
-          forms.map((form) => (
-            <form>
-            {form.fields.map((field => (
+        <button style={{marginBottom: '12px'}} onClick={() => setSelectedForm(selectedForm == 0 ? 1 : 0)}>Toggle Forms</button>
+        
+          <form>
+            {forms[selectedForm].fields.map((field => (
               renderField(field)
             )))}
             </form>
-          ))
-        }
+        
       {!submitted && <button style={{marginTop: '12px'}} onClick={submit}>Submit</button>}
       {submitted && <button style={{marginTop: '12px'}} onClick={print}>Save</button>}
       </main>

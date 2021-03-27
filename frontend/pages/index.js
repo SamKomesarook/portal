@@ -77,10 +77,14 @@ export default function Home({ status, forms }) {
   
     switch(field.type){
       case 'number':
-        return (<label>
+        return (
+        <>
+        <label>
         {field.name}
         <input style={{marginLeft: '12px'}} value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
-        </label>)
+        </label>
+        <p>{field.desc}</p>
+        </>)
       default:
         return 
     }
@@ -90,7 +94,7 @@ export default function Home({ status, forms }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Console</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

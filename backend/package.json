@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "run": "node dist/main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.22.1",
+    "graphql": "^15.5.0",
+    "install": "^0.13.0",
+    "npm": "^7.7.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}

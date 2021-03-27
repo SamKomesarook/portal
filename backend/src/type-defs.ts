@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server';
-
+// TODO: replace the query rules with a JSON decodable string
 export default gql`
-
+  
   type Rule {
     key: String
     value: String
@@ -22,5 +22,9 @@ export default gql`
   type Query {
     status: String!
     getForms: [Form]
+  }
+
+  type Mutation {
+    postResults(results: String): Boolean
   }
 `

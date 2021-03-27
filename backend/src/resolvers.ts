@@ -23,9 +23,16 @@ const getForms = () => {
   ]
 }
 
+const handleResults = (results: String) => {
+  return true
+}
+
 export default {
   Query: {
     status: (): string => 'Okay!',
     getForms: () => getForms()
+  },
+  Mutation: {
+    postResults: (obj: any, args: any) => handleResults(args.results)
   }
 }

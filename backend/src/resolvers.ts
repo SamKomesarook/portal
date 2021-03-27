@@ -8,11 +8,11 @@ const getForms = () => {
           desc: 'Describe how handsome Sam is on a scale of 1-10',
           rules: [
             {
-              key: 'bottom',
+              key: 'min',
               value: '0'
             },
             {
-              key: 'top',
+              key: 'max',
               value: '10'
             }
           ]

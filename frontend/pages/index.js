@@ -40,6 +40,25 @@ export async function getStaticProps() {
  };
 }
 
+const renderField = (field) => {
+  
+  // Create a rule dictionary so it's easier to query below.
+  let parsedRules = {}
+  field.rules.map((rule) => {
+    parsedRules[rule.key] = rule.value
+  })
+
+  switch(field.type){
+    case 'number':
+      return (<label>
+      {field.name}
+      <input type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} />        
+      </label>)
+    default:
+      return 
+  }
+}
+
 export default function Home({ status, forms }) {
   return (
     <div className={styles.container}>
@@ -59,11 +78,11 @@ export default function Home({ status, forms }) {
 
         {
           forms.map((form) => (
-            <div>
+            <form>
             {form.fields.map((field => (
-              <h3>{field.desc}</h3>
+              renderField(field)
             )))}
-            </div>
+            </form>
           ))
         }
 

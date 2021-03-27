@@ -3,6 +3,7 @@ const getForms = () => {
     {
       fields: [
         {
+          id: 'handsome',
           name: 'Handsomeness Rating',
           type: 'number',
           desc: 'Describe how handsome Sam is on a scale of 1-10',

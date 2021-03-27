@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
-
+import React, { useState } from 'react';
 
 export async function getStaticProps() {
   const status = await client.query({
@@ -19,6 +19,7 @@ export async function getStaticProps() {
       query GetForms {
         getForms {
           fields {
+            id
             name
             type
             desc
@@ -40,26 +41,35 @@ export async function getStaticProps() {
  };
 }
 
-const renderField = (field) => {
-  
-  // Create a rule dictionary so it's easier to query below.
-  let parsedRules = {}
-  field.rules.map((rule) => {
-    parsedRules[rule.key] = rule.value
-  })
-
-  switch(field.type){
-    case 'number':
-      return (<label>
-      {field.name}
-      <input type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} />        
-      </label>)
-    default:
-      return 
-  }
-}
-
 export default function Home({ status, forms }) {
+
+  const [fields, setFields] = useState({});
+
+  const renderField = (field) => {
+    // Create a rule dictionary so it's easier to query below.
+    let parsedRules = {}
+    field.rules.map((rule) => {
+      parsedRules[rule.key] = rule.value
+    })
+  
+    const onChange = e => {
+      setFields(prev =>({
+          ...prev,
+          [field.id] : e.target.value
+      }));
+    }
+  
+    switch(field.type){
+      case 'number':
+        return (<label>
+        {field.name}
+        <input  value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
+        </label>)
+      default:
+        return 
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>

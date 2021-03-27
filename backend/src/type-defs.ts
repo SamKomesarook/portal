@@ -8,6 +8,7 @@ export default gql`
   }
 
   type Field {
+    id: ID!
     name: String!
     type: String!
     desc: String

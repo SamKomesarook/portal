@@ -25,6 +25,6 @@ export default gql`
   }
 
   type Mutation {
-    postResults(results: String): Boolean
+    postResults(results: String, formNum: Int): Boolean
   }
 `

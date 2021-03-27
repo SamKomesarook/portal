@@ -1,3 +1,7 @@
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+
 const getForms = () => {
   return [
     {
@@ -23,7 +27,16 @@ const getForms = () => {
   ]
 }
 
-const handleResults = (results: String) => {
+const handleResults = async (results: any, formNum: any) => {
+  const fields = JSON.parse(results);
+  if(formNum == 1){
+    await prisma.form1.create({
+      data: {
+        handsomeRating: fields.handsomeRating,
+      },
+
+    })
+  }
   return true
 }
 
@@ -33,6 +46,6 @@ export default {
     getForms: () => getForms()
   },
   Mutation: {
-    postResults: (obj: any, args: any) => handleResults(args.results)
+    postResults: (obj: any, args: any) => handleResults(args.results, args.formNum)
   }
 }

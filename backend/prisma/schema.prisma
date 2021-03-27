@@ -13,6 +13,5 @@ generator client {
 model Form1 {
   id                Int      @default(autoincrement()) @id
   createdAt         DateTime @default(now())
-  userName          String   @unique
   handsomeRating    Int
 }

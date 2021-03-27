@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import client from "../apollo-client";
 import React, { useState } from 'react';
 import jsPDF from "jspdf";
@@ -41,15 +41,27 @@ export async function getStaticProps() {
  };
 }
 
+const POST_RESULT = gql`
+      mutation PostResults($results: String!, $formNum: Int) {
+        addTodo(results: $results, formNum: $formNum) {
+          addTodo
+        }
+      }
+    `;
+
 export default function Home({ status, forms }) {
 
   const [fields, setFields] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [addTodo, { data }] = useMutation(POST_RESULT);
+  const [selectedForm, setSelectedForm] = useState(0)
 
   const submit = () => {
+    addTodo({ variables: { results: JSON.stringify(fields),  formNum: selectedForm+1} });
     print();
     setSubmitted(true);
   }
+
 
   const print = () => {
     const doc = new jsPDF();
@@ -106,6 +118,8 @@ export default function Home({ status, forms }) {
         <p className={styles.description}>
           The status of the server is {status}
         </p>
+
+        <button style={{marginBottom: '12px'}} onClick={submit}>Toggle</button>
 
         {
           forms.map((form) => (

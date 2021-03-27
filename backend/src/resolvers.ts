@@ -43,7 +43,10 @@ const getForms = () => {
   ]
 }
 
-const handleResults = async (results: any, formNum: any) => {
+const handleResults = async (results: any, formNum: any, cookies: any) => {
+  if(cookies.auth !== 'shepherd'){
+    return false;
+  }
   const fields = JSON.parse(results);
   try{
     if(formNum == 1){
@@ -72,6 +75,6 @@ export default {
     getForms: () => getForms()
   },
   Mutation: {
-    postResults: (obj: any, args: any) => handleResults(args.results, args.formNum)
+    postResults: (obj: any, args: any, context: any) => handleResults(args.results, args.formNum, context.cookies)
   }
 }

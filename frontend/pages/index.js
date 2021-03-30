@@ -27,6 +27,10 @@ export async function getStaticProps() {
               key
               value
             }
+            dropdownValues {
+              key
+              value
+            }
           }
         }
       }
@@ -76,7 +80,7 @@ export default function Home({ status, forms }) {
   const renderField = (field) => {
     // Create a rule dictionary so it's easier to query below.
     let parsedRules = {}
-    field.rules.map((rule) => {
+    field.rules && field.rules.map((rule) => {
       parsedRules[rule.key] = rule.value
     })
   
@@ -134,6 +138,25 @@ export default function Home({ status, forms }) {
         </label>
         <p>{field.desc}</p>
         </>)
+      case 'select':
+        return (
+        <>
+        <label>
+        {field.name}
+        <select onChange={e => {
+      setFields(prev =>({
+          ...prev,
+          [field.id] : e.target.value
+      }));
+    }} style={{marginLeft: '12px'}} name={field.name} id={field.name} form={`form${selectedForm}`}>
+          {
+            field.dropdownValues.map((elem) => {
+                return <option value={elem.key}>{elem.value}</option>})
+          }
+        </select>       
+        </label>
+        <p>{field.desc}</p>
+        </>)
       default:
         return 
     }
@@ -157,7 +180,7 @@ export default function Home({ status, forms }) {
 
         <button style={{marginBottom: '12px'}} onClick={() => setSelectedForm(selectedForm == 0 ? 1 : 0)}>Toggle Forms</button>
         
-          <form>
+          <form id={`form${selectedForm}`}>
             {forms[selectedForm].fields.map((field => renderField(field)))}
             </form>
         

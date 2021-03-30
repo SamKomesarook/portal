@@ -28,7 +28,26 @@ const getForms = () => {
           type: 'email',
           desc: 'Enter email to receive updates about Sam\'s beauty routine',
           rules: [
-            
+          ]
+        },
+        {
+          id: 'best_select',
+          name: 'Best Trait',
+          type: 'select',
+          desc: 'Select Sam\'s best trait',
+          dropdownValues: [
+            {
+              key: 'hair',
+              value: 'His amazing hair'
+            },
+            {
+              key: 'looks',
+              value: 'His astounding looks'
+            },
+            {
+              key: 'prog',
+              value: 'His drool-inducing programming skills'
+            }
           ]
         }
       ]

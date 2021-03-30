@@ -17,4 +17,5 @@ model Form {
   hair              String   @default("Soooo nice!")
   email             String   @default("")
   jeff_check        Boolean  @default(true)
+  best_select       String   @default("His amazing hair")
 }

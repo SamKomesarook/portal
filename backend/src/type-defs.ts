@@ -7,12 +7,18 @@ export default gql`
     value: String
   }
 
+  type DropdownValues {
+    key: String
+    value: String
+  }
+
   type Field {
     id: ID!
     name: String!
     type: String!
     desc: String
     rules: [Rule]
+    dropdownValues: [DropdownValues]
   }
 
   type Form {

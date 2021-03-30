@@ -120,6 +120,20 @@ export default function Home({ status, forms }) {
         </label>
         <p>{field.desc}</p>
         </>)
+      case 'check':
+        return (
+        <>
+        <label>
+        {field.name}
+        <input type='checkbox' style={{marginLeft: '12px'}} value={fields[field.id]} onChange={e => {
+      setFields(prev =>({
+          ...prev,
+          [field.id] : e.target.checked
+      }));
+    }} />        
+        </label>
+        <p>{field.desc}</p>
+        </>)
       default:
         return 
     }

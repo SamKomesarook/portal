@@ -46,6 +46,15 @@ const getForms = () => {
               value: '100'
             }
           ]
+        },
+        {
+          id: 'jeff_check',
+          name: 'Jeff Check',
+          type: 'check',
+          desc: 'Check if Sam is a better programmer than Jeff Dean.',
+          rules: [
+            
+          ]
         }
       ]
     }
@@ -57,7 +66,6 @@ const handleResults = async (results: any, cookies: any) => {
     return false;
   }
   const fields = JSON.parse(results);
-  console.log(fields)
   try{
     await prisma.form.create({
       data:   fields

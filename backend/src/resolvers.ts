@@ -53,9 +53,9 @@ const getForms = () => {
 }
 
 const handleResults = async (results: any, cookies: any) => {
-  /*if(cookies.auth !== 'shepherd'){
+  if(cookies.auth !== 'shepherd'){
     return false;
-  }*/
+  }
   const fields = JSON.parse(results);
   console.log(fields)
   try{

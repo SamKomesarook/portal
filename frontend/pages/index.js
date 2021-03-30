@@ -42,9 +42,9 @@ export async function getStaticProps() {
 }
 
 const POST_RESULT = gql`
-      mutation PostResults($results: String!, $formNum: Int) {
-        addTodo(results: $results, formNum: $formNum) {
-          addTodo
+      mutation PostResults($results: String!) {
+        postResults(results: $results) {
+          status
         }
       }
     `;
@@ -53,11 +53,11 @@ export default function Home({ status, forms }) {
 
   const [fields, setFields] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [addTodo, { data }] = useMutation(POST_RESULT);
+  const [postResults, { data }] = useMutation(POST_RESULT);
   const [selectedForm, setSelectedForm] = useState(0)
 
   const submit = () => {
-    addTodo({ variables: { results: JSON.stringify(fields),  formNum: selectedForm+1} });
+    postResults({ variables: { results: JSON.stringify(fields)} });
     print();
     setSubmitted(true);
   }
@@ -93,7 +93,12 @@ export default function Home({ status, forms }) {
         <>
         <label>
         {field.name}
-        <input style={{marginLeft: '12px'}} value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={onChange} />        
+        <input style={{marginLeft: '12px'}} value={fields[field.id]} type="number" min={parsedRules['min'] || null } max={parsedRules['max'] || null} onChange={(e) => {
+          setFields(prev =>({
+            ...prev,
+            [field.id] : parseInt(e.target.value)
+        }));
+        }} />        
         </label>
         <p>{field.desc}</p>
         </>)
@@ -106,12 +111,19 @@ export default function Home({ status, forms }) {
         </label>
         <p>{field.desc}</p>
         </>)
+      case 'email':
+        return (
+        <>
+        <label>
+        {field.name}
+        <input type='email' style={{marginLeft: '12px'}} value={fields[field.id]} onChange={onChange} />        
+        </label>
+        <p>{field.desc}</p>
+        </>)
       default:
         return 
     }
   }
-
-
 
   return (
     <div className={styles.container}>
@@ -132,9 +144,7 @@ export default function Home({ status, forms }) {
         <button style={{marginBottom: '12px'}} onClick={() => setSelectedForm(selectedForm == 0 ? 1 : 0)}>Toggle Forms</button>
         
           <form>
-            {forms[selectedForm].fields.map((field => (
-              renderField(field)
-            )))}
+            {forms[selectedForm].fields.map((field => renderField(field)))}
             </form>
         
       {!submitted && <button style={{marginTop: '12px'}} onClick={submit}>Submit</button>}

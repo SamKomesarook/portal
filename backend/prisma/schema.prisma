@@ -10,14 +10,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Form1 {
+model Form {
   id                Int      @default(autoincrement()) @id
   createdAt         DateTime @default(now())
-  handsomeRating    Int
-}
-
-model Form2 {
-  id                Int      @default(autoincrement()) @id
-  createdAt         DateTime @default(now())
-  hairDesc          String
+  handsome          Int      @default(10)
+  hair              String   @default("Soooo nice!")
+  email             String   @default("")
 }

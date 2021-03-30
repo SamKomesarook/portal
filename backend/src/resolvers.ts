@@ -21,6 +21,15 @@ const getForms = () => {
               value: '10'
             }
           ]
+        },
+        {
+          id: 'email',
+          name: 'Email Signup',
+          type: 'email',
+          desc: 'Enter email to receive updates about Sam\'s beauty routine',
+          rules: [
+            
+          ]
         }
       ]
     },
@@ -43,25 +52,17 @@ const getForms = () => {
   ]
 }
 
-const handleResults = async (results: any, formNum: any, cookies: any) => {
-  if(cookies.auth !== 'shepherd'){
+const handleResults = async (results: any, cookies: any) => {
+  /*if(cookies.auth !== 'shepherd'){
     return false;
-  }
+  }*/
   const fields = JSON.parse(results);
+  console.log(fields)
   try{
-    if(formNum == 1){
-      await prisma.form1.create({
-        data: {
-          handsomeRating: fields.handsomeRating,
-        },
-      })
-    }else{
-      await prisma.form2.create({
-        data: {
-          hairDesc: fields.hairDesc,
-        },
-      })
-    }
+    await prisma.form.create({
+      data:   fields
+      ,
+    })
     return true
   }catch (e){
     console.log(e)
@@ -75,6 +76,6 @@ export default {
     getForms: () => getForms()
   },
   Mutation: {
-    postResults: (obj: any, args: any, context: any) => handleResults(args.results, args.formNum, context.cookies)
+    postResults: (obj: any, args: any, context: any) => handleResults(args.results, context.cookies)
   }
 }
